@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Towbar — Launch Solana coins towed by any chain</title>
+<meta name="description" content="Towbar ($TOWBAR) is a launchpad on Solana where every coin is towed by an asset from another chain. Buyers pay SOL; your coin is priced in its tow.">
+<meta property="og:title" content="Towbar — $TOWBAR">
+<meta property="og:description" content="Launch Solana coins towed by any chain. Pick a tow, hook your coin to it, and your chart moves with it.">
+<meta property="og:image" content="construction.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#ff7a00">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============ BOOT ============ -->
+<div id="boot" aria-label="Towbar boot screen">
+  <div class="logo-row"><img src="barricade.png" alt=""><div class="brand">TOWBAR BIOS v2.0<small>HARD HAT AREA · AUTHORIZED COINS ONLY</small></div></div>
+  <div id="bootlines"></div>
+  <div class="bar"><i></i></div>
+  <svg class="crane" viewBox="0 0 260 220" shape-rendering="crispEdges" aria-hidden="true">
+    <rect x="60" y="20" width="14" height="200" fill="#ffc400"/><rect x="62" y="22" width="10" height="196" fill="none" stroke="#000" stroke-width="2" stroke-dasharray="6 6"/>
+    <rect x="10" y="20" width="240" height="10" fill="#ffc400"/><rect x="10" y="30" width="240" height="2" fill="#000"/>
+    <rect x="12" y="8" width="40" height="12" fill="#ff7a00"/><rect x="58" y="4" width="18" height="16" fill="#2b5fab"/>
+    <g class="hook"><rect x="199" y="32" width="2" height="70" fill="#ccc"/><rect x="190" y="102" width="20" height="8" fill="#ff7a00"/><rect x="198" y="110" width="4" height="10" fill="#ccc"/><rect x="170" y="120" width="60" height="16" fill="#ffc400"/><text x="200" y="132" font-size="10" font-weight="bold" font-family="monospace" text-anchor="middle" fill="#000">$TOWBAR</text></g>
+  </svg>
+  <button class="btn98 skip" id="skipboot">Skip ▸</button>
+</div>
+
+<!-- ============ DESKTOP ============ -->
+<div id="desktop">
+  <div class="sun"></div>
+  <div class="cloud" style="top:9%;width:90px;animation-duration:70s;animation-delay:-10s"></div>
+  <div class="cloud" style="top:17%;width:60px;animation-duration:95s;animation-delay:-50s"></div>
+  <div class="cloud" style="top:5%;width:120px;animation-duration:120s;animation-delay:-80s"></div>
+  <svg id="skyline" viewBox="0 0 1600 500" preserveAspectRatio="xMidYMax slice" shape-rendering="crispEdges" aria-hidden="true"></svg>
+  <div class="ground"></div>
+  <nav id="icons" aria-label="Desktop"></nav>
+
+  <!-- MAIN EXPLORER WINDOW -->
+  <section class="window" id="main" aria-label="Towbar">
+    <div class="titlebar" id="main-title">
+      <img class="t-ico" src="barricade.png" alt="">
+      <span class="t-txt" id="wintitle">Towbar — C:\TOWBAR\HOME</span>
+      <button class="ctl" data-act="min" aria-label="Minimize">_</button>
+      <button class="ctl" data-act="max" aria-label="Maximize">□</button>
+      <button class="ctl" data-act="close" aria-label="Close">×</button>
+    </div>
+    <div class="hazard-strip"></div>
+    <div class="menubar">
+      <button class="mi" data-go="#/"><u>F</u>ile</button>
+      <button class="mi" data-go="#/tows"><u>T</u>ows</button>
+      <button class="mi" data-go="#/coins"><u>C</u>oins</button>
+      <button class="mi" data-go="#/launch"><u>L</u>aunch</button>
+      <button class="mi" data-go="#/docs"><u>H</u>elp</button>
+      <div class="grow"></div>
+      <div class="status-pill" title="Live price feed"><i class="dot live" id="feeddot"></i><span id="feedtxt">feed: online</span></div>
+    </div>
+    <div class="toolbar" id="toolbar"></div>
+    <div class="addrbar">
+      <span>Address</span>
+      <div class="field98 addr"><span id="addr-ico"></span><span id="addr">C:\TOWBAR\HOME</span></div>
+      <select class="field98" id="chainsel" aria-label="Chain filter"></select>
+    </div>
+    <main class="viewport" id="view" tabindex="-1"></main>
+    <div class="statusbar">
+      <div class="s1" id="status">Ready</div>
+      <div class="s2" id="status2">41 tows · 10 chains</div>
+      <div class="s3">🔒 Solana mainnet</div>
+    </div>
+  </section>
+
+  <!-- NOTEPAD -->
+  <section class="window float drag hidden" id="notepad" style="left:58%;top:16%" aria-label="Notepad">
+    <div class="titlebar"><span class="t-ico" data-ico="notepad"></span><span class="t-txt">Site Notes.txt — Notepad</span><button class="ctl" data-close="notepad" aria-label="Close">×</button></div>
+    <div class="np-menu"><span><u>F</u>ile</span><span><u>E</u>dit</span><span><u>F</u>ormat</span><button class="linkbtn" id="np-clear">Clear</button></div>
+    <div class="body"><textarea id="np-text" spellcheck="false" placeholder="Notes:"></textarea></div>
+  </section>
+
+  <!-- LOAD CALCULATOR -->
+  <section class="window float drag hidden" id="calcwin" style="left:30%;top:10%;width:400px" aria-label="Load Calculator">
+    <div class="titlebar"><span class="t-ico" data-ico="calc"></span><span class="t-txt">Load Calculator.exe</span><button class="ctl" data-close="calcwin" aria-label="Close">×</button></div>
+    <div class="body" id="calcbody"></div>
+  </section>
+</div>
+
+<!-- ============ TASKBAR ============ -->
+<div id="startmenu" role="menu" aria-label="Start menu">
+  <div class="side"><span>Tow<em>bar</em>98</span></div>
+  <ul id="startlist"></ul>
+</div>
+<footer id="taskbar">
+  <button class="btn98" id="startbtn" aria-haspopup="menu"><img src="barricade.png" alt="">Start</button>
+  <div class="ql" id="quick"></div>
+  <div id="tasks"></div>
+  <div id="tray"><span class="sol" title="SOL / USD"><span data-ico="sol"></span><span id="tray-sol">—</span></span><span data-ico="hat" title="Hard hat on"></span><span id="clock">--:--</span></div>
+</footer>
+
+<div id="dlg-wrap"><div class="window" id="dlg" role="dialog" aria-modal="true"></div></div>
+<div id="toast"></div>
+<input type="file" id="filein" accept="image/*" hidden>
+
+<script src="app.js"></script>
+</body>
+</html>
